@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom'
 import Axios from 'axios'
 
 class CatalogList extends React.Component {
-	// TODO: Axios to api/books to fetch all books from database and populate
-	// 		index with tiles
+	//TODO: Implement fuzzy matching search feature
+	// and sort functionality by title, author, date, etc.
 
 	_isMounted = false
-
 	state = {
 		books: []
 	}
@@ -27,12 +26,27 @@ class CatalogList extends React.Component {
 		this._isMounted = false
 	}
 
+	delete(){
+
+	}
+
 	render() {
 		return (
-			<div className="collection">
-				{
-					this.state.books.map( book => <a href="#!" key={book.id} id={book.id} className="collection-item">{book.title}, by {book.author}, {book.edition}, {book.date_published}</a> )
-				}
+			<div className="">
+				<div className="collection with-header">
+					<p className="collection-header">
+						<h4>Books</h4>
+					</p>
+					{
+						this.state.books.map( book => {
+							return (
+								<a href={`/${book.id}`} className="collection-item truncate" key={book.id}>
+									<strong>{book.title}</strong> by {book.author}, ed. {book.edition}, {book.page_count} pages, {book.date_published}
+								</a>
+							)
+						} )
+					}
+				</div>
 			</div>
 		)
 	}

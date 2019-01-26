@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Book Catalog</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   </head>
   <body>
     <header>
-      <h1>Book Catalog</h1>
+      <h1 class="center-align">Book Catalog</h1>
     </header>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

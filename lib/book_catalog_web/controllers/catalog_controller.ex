@@ -18,7 +18,9 @@ defmodule BookCatalogWeb.CatalogController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def show(conn, _params) do
+  def show(conn, %{"id" => book_id}) do
+    book = Repo.get!(Book, book_id)
+    render(conn, "show.html", book: book)
   end
 
   def create(conn, %{"book" => book} = params) do
@@ -40,6 +42,12 @@ defmodule BookCatalogWeb.CatalogController do
   def update(conn, _params) do
   end
 
-  def delete(conn, _params) do
+  def delete(conn, %{"id" => book_id}) do
+    Repo.get!(Book, book_id)
+    |> Repo.delete()
+
+    conn
+    |> put_flash(:info, "Book Deleted")
+    |> redirect(to: Routes.catalog_path(conn, :index))
   end
 end

@@ -1,0 +1,6 @@
+<h1><%= @book.title %></h1>
+<h4>by <%= @book.author%></h4>
+<p><strong>Edition: </strong><%= @book.ed %>, <strong>Date Published:</strong> <%= @book.date_published %>, <strong>Page Count:</strong> <%= @book.page_count %>, <strong>ISBN:</strong> <%= @book.isbn %>, <strong>Created At:</strong> <%= @book.inserted_at %></p>
+<%= link "Edit", to: Routes.catalog_path(@conn, :edit, @book), class: "waves-effect waves-light btn-small right-align" %>
+ <%= link "Delete", to: Routes.catalog_path(@conn, :delete, 
+ @book), method: :delete, class: "waves-effect waves-light btn-small right-align red accent-3"%>

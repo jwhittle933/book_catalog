@@ -7,4 +7,8 @@ defmodule BookCatalogWeb.APIController do
     books = Repo.all(Book)
     render(conn, "index.json", books: books)
   end
+
+  def delete(conn, %{"id" => book_id}) do
+    # delete  
+  end
 end
