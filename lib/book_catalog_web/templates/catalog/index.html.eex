@@ -1,9 +1,2 @@
-<div class="">
-	<div class="collection">
-		<%= for book <- @books do %>
-			<a href="#!" class="collection-item"><%= book.title %>, by <%= book.author %>, <%= book.ed %>, <%= book.date_published %></a>	 
-		<% end %>
-	</div>
-</div>
-<div id="app" title="test">
+<div id="app">
 </div>

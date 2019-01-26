@@ -7,7 +7,7 @@ class CatalogList extends React.Component {
 	// 		index with tiles
 
 	_isMounted = false
-	
+
 	state = {
 		books: []
 	}
@@ -18,7 +18,7 @@ class CatalogList extends React.Component {
 			.get('/api/books')
 			.then( res => {
 				if (this._isMounted){
-					this.setState({ books: res.data })
+					this.setState({ books: res.data.books })
 				}	
 			})
 	}
@@ -29,10 +29,10 @@ class CatalogList extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<strong className="list-group">
-					React Component
-				</strong>
+			<div className="collection">
+				{
+					this.state.books.map( book => <a href="#!" key={book.id} id={book.id} className="collection-item">{book.title}, by {book.author}, {book.edition}, {book.date_published}</a> )
+				}
 			</div>
 		)
 	}
@@ -42,6 +42,5 @@ class CatalogList extends React.Component {
 
 if (document.getElementById('app')){
 	const element = document.getElementById('app')
-	const props = Object.assign({}, element.dataset)
 	ReactDOM.render(<CatalogList />, element)
 }
