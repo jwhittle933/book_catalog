@@ -8,7 +8,8 @@ class CatalogList extends React.Component {
 
 	_isMounted = false
 	state = {
-		books: []
+		books: [],
+		fuzzyMatch: []
 	}
 
 	componentDidMount(){
@@ -32,11 +33,9 @@ class CatalogList extends React.Component {
 
 	render() {
 		return (
-			<div className="">
+			<div className="z-depth-3">
 				<div className="collection with-header">
-					<p className="collection-header">
-						<h4>Books</h4>
-					</p>
+					<h2 className="collection-header">Books</h2>
 					{
 						this.state.books.map( book => {
 							return (

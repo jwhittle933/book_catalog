@@ -7,11 +7,16 @@
     <title>Book Catalog</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </body>
 
   </head>
   <body>
     <header>
-      <h1 class="center-align">Book Catalog</h1>
+       <nav>
+        <div class="nav-wrapper">
+          <a href="/" class="brand-logo center">Book Catalog</a>
+        </div>
+      </nav>
     </header>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

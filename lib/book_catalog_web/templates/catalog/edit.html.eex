@@ -1,0 +1,36 @@
+<div id="edit" data-booktitle="<%= @book.title %>"
+				data-bookauthor="<%= @book.author %>"
+				data-booked="<%= @book.ed %>"
+				data-bookpages="<%= @book.page_count %>"
+				data-id="<%= @book.id %>"
+				data-datepublished="<%= @book.date_published %>"
+				data-isbn="<%= @book.isbn %>"
+				data-created="<%= @book.inserted_at %>"
+	>
+</div>
+
+<%= form_for @changeset, Routes.catalog_path(@conn, :update, @book), fn f -> %>
+    <div class="form-group">
+    	<label> Title
+	        <%= text_input f, :title, placeholder: "Title", class: "form-control" %>
+	    </label>
+	    <label> Author
+	        <%= text_input f, :author, placeholder: "Author", class: "form-control" %>
+	    </label>
+	    <label> Edition
+	        <%= text_input f, :ed, placeholder: "Edition", class: "form-control" %>
+	    </label>
+	    <label> Date Published
+	        <%= text_input f, :date_published, placeholder: "Date Published", class: "form-control" %>
+	    </label>
+	    <label> ISBN
+	        <%= text_input f, :isbn, placeholder: "ISBN", class: "form-control" %>
+        </label>
+        <label> Page Count
+	        <%= text_input f, :page_count, placeholder: "Page Count", class: "form-control" %>
+	    </label>
+        <%= error_tag f, :title %>
+    </div>
+
+    <%= submit "Save Topic", class: "btn btn-primary"%>
+<% end %>

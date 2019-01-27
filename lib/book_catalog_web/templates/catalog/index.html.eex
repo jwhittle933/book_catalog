@@ -1,2 +1,5 @@
 <div id="app" class="">
 </div>
+<div class="">
+	<%= link "Add New", to: Routes.catalog_path(@conn, :new), class: "waves-effect waves-light btn-small right-align" %>
+</div>

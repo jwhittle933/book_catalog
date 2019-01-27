@@ -9,21 +9,13 @@ defmodule BookCatalogWeb.CatalogController do
     render(conn, "index.html", books: books)
   end
 
-  def edit(conn, _params) do
-  end
-
   def new(conn, _params) do
     changeset = Book.changeset(%Book{}, %{})
 
     render(conn, "new.html", changeset: changeset)
   end
 
-  def show(conn, %{"id" => book_id}) do
-    book = Repo.get!(Book, book_id)
-    render(conn, "show.html", book: book)
-  end
-
-  def create(conn, %{"book" => book} = params) do
+  def create(conn, %{"book" => book}) do
     changeset = Book.changeset(%Book{}, book)
 
     case Repo.insert(changeset) do
@@ -39,7 +31,30 @@ defmodule BookCatalogWeb.CatalogController do
     end
   end
 
-  def update(conn, _params) do
+  def edit(conn, %{"id" => book_id}) do
+    book = Repo.get(Book, book_id)
+    changeset = Book.changeset(book)
+    render(conn, "edit.html", changeset: changeset, book: book)
+  end
+
+  def update(conn, %{"id" => book_id, "book" => book}) do
+    old_book = Repo.get(Book, book_id)
+    changeset = Book.changeset(old_book, book)
+
+    case Repo.update(changeset) do
+      {:ok, book} ->
+        conn
+        |> put_flash(:info, "Book updated")
+        |> redirect(to: Routes.catalog_path(conn, :index))
+
+      {:error, changeset} ->
+        render(conn, "edit.html", changeset: changeset, book: old_book)
+    end
+  end
+
+  def show(conn, %{"id" => book_id}) do
+    book = Repo.get!(Book, book_id)
+    render(conn, "show.html", book: book)
   end
 
   def delete(conn, %{"id" => book_id}) do
