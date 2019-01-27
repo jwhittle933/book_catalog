@@ -9,6 +9,8 @@ defmodule BookCatalog.Book do
     field :isbn, :string
     field :page_count, :integer
     field :title, :string
+    field :publisher, :string
+    field :category, :string
 
     timestamps()
   end
@@ -16,7 +18,25 @@ defmodule BookCatalog.Book do
   @doc false
   def changeset(book, attrs \\ %{}) do
     book
-    |> cast(attrs, [:title, :author, :date_published, :page_count, :ed, :isbn])
-    |> validate_required([:title, :author, :date_published, :page_count, :ed, :isbn])
+    |> cast(attrs, [
+      :title,
+      :author,
+      :date_published,
+      :page_count,
+      :ed,
+      :isbn,
+      :publisher,
+      :category
+    ])
+    |> validate_required([
+      :title,
+      :author,
+      :date_published,
+      :page_count,
+      :ed,
+      :isbn,
+      :publisher,
+      :category
+    ])
   end
 end
