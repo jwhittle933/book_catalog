@@ -14,14 +14,29 @@
     	<label> Title
 	        <%= text_input f, :title, placeholder: "Title", class: "form-control" %>
 	    </label>
+	    <label> Subtitle
+	        <%= text_input f, :subtitle, placeholder: "Subtitle", class: "form-control" %>
+	    </label>
 	    <label> Author
 	        <%= text_input f, :author, placeholder: "Author", class: "form-control" %>
 	    </label>
 	    <label> Edition
 	        <%= text_input f, :ed, placeholder: "Edition", class: "form-control" %>
 	    </label>
+	    <label> Volume
+	        <%= text_input f, :volume, placeholder: "Volume", class: "form-control" %>
+	    </label>
+	    <label> Series
+	        <%= text_input f, :series, placeholder: "Series", class: "form-control" %>
+	    </label>
 	    <label> Date Published
 	        <%= text_input f, :date_published, placeholder: "Date Published", class: "form-control" %>
+	    </label>
+	    <label> Publisher
+	        <%= text_input f, :publisher, placeholder: "Date Published", class: "form-control" %>
+	    </label>
+	    <label> Category
+	        <%= text_input f, :category, placeholder: "Date Published", class: "form-control" %>
 	    </label>
 	    <label> ISBN
 	        <%= text_input f, :isbn, placeholder: "ISBN", class: "form-control" %>
@@ -32,5 +47,5 @@
         <%= error_tag f, :title %>
     </div>
 
-    <%= submit "Save Topic", class: "btn btn-primary"%>
+    <%= submit "Save Changes", class: "btn btn-primary"%>
 <% end %>

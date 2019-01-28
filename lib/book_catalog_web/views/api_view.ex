@@ -17,8 +17,12 @@ defmodule BookCatalogWeb.APIView do
     %{
       id: book.id,
       title: book.title,
+      subtitle: book.subtitle,
       author: book.author,
       edition: book.ed,
+      volume: book.volume,
+      series: book.series,
+      category: book.category,
       date_published: book.date_published,
       page_count: book.page_count,
       isbn: book.isbn,

@@ -11,13 +11,14 @@
 
   </head>
   <body>
-    <header>
-       <nav>
-        <div class="nav-wrapper">
-          <a href="/" class="brand-logo center">Book Catalog</a>
-        </div>
-      </nav>
-    </header>
+    <nav class="blue darken-4">
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo center">Book Catalog</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><%= link "Add New", to: Routes.catalog_path(@conn, :new), class: "waves-effect waves-light btn green accent-3" %></li>
+        </ul>
+      </div>
+    </nav>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>

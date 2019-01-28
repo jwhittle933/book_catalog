@@ -5,6 +5,10 @@ import Axios from 'axios'
 class CatalogList extends React.Component {
 	//TODO: Implement fuzzy matching search feature
 	// and sort functionality by title, author, date, etc.
+	// Axios api call for all books based on sort category, 
+	// set state with returned data, and populate list
+
+	// Add edit/delete functionality to each list item
 
 	_isMounted = false
 	state = {
@@ -27,8 +31,8 @@ class CatalogList extends React.Component {
 		this._isMounted = false
 	}
 
-	delete(){
-
+	filterData(){
+		//retrieve filtered list of books
 	}
 
 	render() {
@@ -39,8 +43,8 @@ class CatalogList extends React.Component {
 					{
 						this.state.books.map( book => {
 							return (
-								<a href={`/${book.id}`} className="collection-item truncate" key={book.id}>
-									<strong>{book.title}</strong> by {book.author}, ed. {book.edition}, {book.page_count} pages, {book.date_published}
+								<a href={`/${book.id}`} className="collection-item truncate blue-grey-text" key={book.id}>
+									<strong>{book.title}</strong> by <em>{book.author}</em>, {book.page_count} <small>pgs.</small>, {book.date_published}
 								</a>
 							)
 						} )

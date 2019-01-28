@@ -8,7 +8,7 @@ defmodule BookCatalogWeb.APIController do
     render(conn, "index.json", books: books)
   end
 
-  def delete(conn, %{"id" => book_id}) do
-    # delete  
+  def filter(conn, %{"filter" => filter}) do
+    # 
   end
 end

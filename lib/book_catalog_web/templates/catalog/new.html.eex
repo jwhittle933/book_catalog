@@ -5,13 +5,28 @@
 			Title: <%= text_input f, :title %>
 		</label>
 		<label>
+			Subtitle: <%= text_input f, :subtitle %>
+		</label>
+		<label>
 			Author: <%= text_input f, :author %>
 		</label>
 		<label>
 			Edition: <%= text_input f, :ed %>
 		</label>
 		<label>
+			Series: <%= text_input f, :series %>
+		</label>
+		<label>
+			Volume: <%= text_input f, :volume %>
+		</label>
+		<label>
 			Publication Date: <%= text_input f, :date_published %>
+		</label>
+		<label>
+			Publisher: <%= text_input f, :publisher %>
+		</label>
+		<label>
+			Category: <%= text_input f, :category %>
 		</label>
 		<label>
 			ISBN: <%= text_input f, :isbn %>

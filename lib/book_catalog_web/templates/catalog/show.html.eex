@@ -1,6 +1,16 @@
 <h1><%= @book.title %></h1>
 <h4>by <%= @book.author%></h4>
-<p><strong>Edition: </strong><%= @book.ed %>, <strong>Date Published:</strong> <%= @book.date_published %>, <strong>Page Count:</strong> <%= @book.page_count %>, <strong>ISBN:</strong> <%= @book.isbn %>, <strong>Created At:</strong> <%= @book.inserted_at %></p>
-<%= link "Edit", to: Routes.catalog_path(@conn, :edit, @book), class: "waves-effect waves-light btn-small right-align" %>
+<p>
+	<strong>Subtitle: </strong><%= @book.subtitle %></br> 
+	<strong>Edition: </strong><%= @book.ed %></br> 
+	<strong>Volume: </strong><%= @book.volume %></br> 
+	<strong>Series: </strong><%= @book.series %></br> 
+	<strong>Page Count:</strong> <%= @book.page_count %></br> 
+	<strong>Date Published:</strong> <%= @book.date_published %></br> 
+	<strong>Publisher:</strong> <%= @book.publisher %></br> 
+	<strong>Category: </strong><%= @book.category %></br> 
+	<strong>ISBN:</strong> <%= @book.isbn %></br>
+</p>
+<%= link "Edit", to: Routes.catalog_path(@conn, :edit, @book), class: "waves-effect waves-light btn-small right-align grey darken-1" %>
  <%= link "Delete", to: Routes.catalog_path(@conn, :delete, 
  @book), method: :delete, class: "waves-effect waves-light btn-small right-align red accent-3"%>

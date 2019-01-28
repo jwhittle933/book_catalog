@@ -9,9 +9,11 @@ defmodule BookCatalog.Book do
     field :isbn, :string
     field :page_count, :integer
     field :title, :string
+    field :subtitle, :string
     field :publisher, :string
     field :category, :string
-
+    field :volume, :string
+    field :series, :string
     timestamps()
   end
 
@@ -20,20 +22,22 @@ defmodule BookCatalog.Book do
     book
     |> cast(attrs, [
       :title,
+      :subtitle,
       :author,
       :date_published,
       :page_count,
-      :ed,
       :isbn,
+      :ed,
       :publisher,
-      :category
+      :category,
+      :volume,
+      :series
     ])
     |> validate_required([
       :title,
       :author,
       :date_published,
       :page_count,
-      :ed,
       :isbn,
       :publisher,
       :category

@@ -23,6 +23,7 @@ defmodule BookCatalogWeb.Router do
   scope "/api", BookCatalogWeb do
     pipe_through :api
 
-    get("/books", APIController, :index)
+    get "/books", APIController, :index
+    get "/books/:filter", APIController, :filter
   end
 end
