@@ -1,5 +1,7 @@
 # BookCatalog
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jwhittle933/book_catalog.svg)](https://greenkeeper.io/)
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
