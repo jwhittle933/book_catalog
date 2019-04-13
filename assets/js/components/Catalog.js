@@ -24,25 +24,27 @@ const Catalog = () => {
   const match = (book, search) => {
     const keys = Object.keys(book);
     const values = Object.values(book);
-    const match = value.filter(value => {
-      value === search ? book : null;
+    const isMatch = false;
+    const match = value.forEach(value => {
+      value === search ? (isMatch = true) : null;
     });
   };
 
   const filterBooks = search => {
-    const searchField = new RegExp(search, 'g');
+    const searchField = new RegExp(search, 'i');
     const filtered = books.filter(book => {
       return (
-        book.author === searchField ||
-        book.date_published === searchField ||
-        book.ed === searchField ||
-        book.isbn === searchField ||
-        book.page_count === searchField ||
-        book.title === searchField ||
-        book.subtitle === searchField
+        searchField.test(book.author) ||
+        searchField.test(book.date_published) ||
+        searchField.test(book.ed) ||
+        searchField.test(book.isbn) ||
+        searchField.test(book.page_count) ||
+        searchField.test(book.title) ||
+        searchField.test(book.subtitle)
       );
     });
     if (search !== '') return setFilteredBooks(filtered);
+    if (search === '') return books;
   };
 
   return (
