@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'phoenix_html';
-import CatalogList from './components/Catalog';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import 'phoenix_html'
+import CatalogList from './components/Catalog'
 // import Edit from './components/Edit';
 
 if (document.getElementById('app')) {
-  const element = document.getElementById('app');
-  ReactDOM.render(<CatalogList />, element);
+  const element = document.getElementById('app')
+  ReactDOM.render(<CatalogList />, element)
 }
 
 // if (document.getElementById('edit')) {
