@@ -6,7 +6,7 @@ defmodule BookCatalogWeb.CatalogController do
   def index(conn, _params) do
     books = Repo.all(Book)
 
-    render(conn, "index.html", books: books)
+    render(conn, "index.html")
   end
 
   def new(conn, _params) do
