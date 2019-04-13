@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { FormSearch } from 'grommet-icons';
-import Axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { FormSearch } from 'grommet-icons'
+import Axios from 'axios'
 
 //TODO: Implement fuzzy matching search feature
 // and sort functionality by title, author, date, etc.
@@ -10,28 +10,19 @@ import Axios from 'axios';
 // Add edit/delete functionality to each list item
 
 const Catalog = () => {
-  const [books, setBooks] = useState([]);
-  const [filteredBooks, setFilteredBooks] = useState([]);
-  const [fuzzyMatch, setFuzzyMatch] = useState([]);
+  const [books, setBooks] = useState([])
+  const [filteredBooks, setFilteredBooks] = useState([])
+  const [fuzzyMatch, setFuzzyMatch] = useState([])
 
   useEffect(() => {
     Axios.get('/api/books').then(res => {
-      setBooks(res.data.books);
-      setFilteredBooks(res.data.books);
-    });
-  }, []);
-
-  const match = (book, search) => {
-    const keys = Object.keys(book);
-    const values = Object.values(book);
-    const isMatch = false;
-    const match = value.forEach(value => {
-      value === search ? (isMatch = true) : null;
-    });
-  };
+      setBooks(res.data.books)
+      setFilteredBooks(res.data.books)
+    })
+  }, [])
 
   const filterBooks = search => {
-    const searchField = new RegExp(search, 'i');
+    const searchField = new RegExp(search, 'i')
     const filtered = books.filter(book => {
       return (
         searchField.test(book.author) ||
@@ -41,11 +32,11 @@ const Catalog = () => {
         searchField.test(book.page_count) ||
         searchField.test(book.title) ||
         searchField.test(book.subtitle)
-      );
-    });
-    if (search !== '') return setFilteredBooks(filtered);
-    if (search === '') return books;
-  };
+      )
+    })
+    if (search !== '') return setFilteredBooks(filtered)
+    if (search === '') return books
+  }
 
   return (
     <div className="z-depth-3">
@@ -54,11 +45,7 @@ const Catalog = () => {
         <div className="container">
           <div className="row">
             <div className="col s1 valign-wrapper">
-              <FormSearch
-                size="large"
-                color="black"
-                onClick={() => setFilteredBooks(books)}
-              />
+              <FormSearch size="large" color="black" />
             </div>
             <div className="col s11">
               <input
@@ -67,8 +54,8 @@ const Catalog = () => {
                 className="validate"
                 placeholder="Search"
                 onKeyDown={e => {
-                  console.log('Keydown');
-                  filterBooks(e.target.value);
+                  console.log('Keydown')
+                  filterBooks(e.target.value)
                 }}
               />
             </div>
@@ -86,7 +73,7 @@ const Catalog = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Catalog;
+export default Catalog

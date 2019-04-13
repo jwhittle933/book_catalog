@@ -24,14 +24,14 @@ defmodule BookCatalog.Book do
       :title,
       :subtitle,
       :author,
-      :date_published,
-      :page_count,
-      :isbn,
       :ed,
+      :series,
+      :volume,
+      :date_published,
       :publisher,
       :category,
-      :volume,
-      :series
+      :isbn,
+      :page_count
     ])
     |> validate_required([
       :title,

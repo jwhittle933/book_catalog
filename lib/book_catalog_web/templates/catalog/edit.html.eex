@@ -46,6 +46,5 @@
 	    </label>
         <%= error_tag f, :title %>
     </div>
-
     <%= submit "Save Changes", class: "btn btn-primary"%>
 <% end %>
