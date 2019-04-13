@@ -94,7 +94,4 @@ const CatalogList = () => {
   );
 };
 
-if (document.getElementById('app')) {
-  const element = document.getElementById('app');
-  ReactDOM.render(<OldCatalogList />, element);
-}
+export default OldCatalogList;
