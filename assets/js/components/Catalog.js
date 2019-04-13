@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Axios from 'axios';
 
-class OldCatalogList extends React.Component {
+class OldCatalog extends React.Component {
   //TODO: Implement fuzzy matching search feature
   // and sort functionality by title, author, date, etc.
   // Axios api call for all books based on sort category,
@@ -63,7 +63,7 @@ class OldCatalogList extends React.Component {
 
 // Add edit/delete functionality to each list item
 
-const CatalogList = () => {
+const Catalog = () => {
   const [books, setBooks] = useState([]);
   const [fuzzyMatch, setFuzzyMatch] = useState([]);
 
@@ -94,4 +94,4 @@ const CatalogList = () => {
   );
 };
 
-export default OldCatalogList;
+export default OldCatalog;
