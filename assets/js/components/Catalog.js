@@ -41,23 +41,22 @@ const Catalog = () => {
   return (
     <div className="z-depth-3">
       <div className="collection with-header">
-        <h2 className="collection-header">Books</h2>
         <div className="container">
           <div className="row">
             <div className="col s1 valign-wrapper">
               <FormSearch size="large" color="black" />
             </div>
-            <div className="col s11">
+            <div className="col s11 input-field inline">
               <input
                 id="last_name"
                 type="text"
                 className="validate"
-                placeholder="Search"
                 onKeyDown={e => {
                   console.log('Keydown')
                   filterBooks(e.target.value)
                 }}
               />
+              <label htmlFor="last_name">Search in Books</label>
             </div>
           </div>
         </div>

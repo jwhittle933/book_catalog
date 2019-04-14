@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'phoenix_html'
+import './materialize.js'
+// import './socket.js'
 import CatalogList from './components/Catalog'
 // import Edit from './components/Edit';
 
