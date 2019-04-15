@@ -4,8 +4,8 @@ defmodule BookCatalogWeb.APIController do
   alias BookCatalog.{Book, Repo}
 
   @doc """
-    index api func for returning list of books to client
-    render func renders view from api_view.ex
+    index api func for returning list of item to client
+    render func renders items.json view defined api_view.ex
   """
   @spec index(Plug.Conn.t(), any()) :: Plug.Conn.t()
   def index(conn, _params) do
@@ -13,20 +13,24 @@ defmodule BookCatalogWeb.APIController do
     render(conn, "items.json", books: books)
   end
 
+  @doc """
+    show api func for returning sinlge item to client
+    render func renders item.json view defined api_view.ex
+  """
   @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => book_id} = _params) do
     book = Repo.get(Book, book_id)
     render(conn, "item.json", book: book)
   end
 
+  @doc """
+    edit api func for updating sinlge item from the client
+    render func renders item.json view defined api_view.ex
+  """
   @spec edit(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def edit(conn, %{"id" => book_id} = _params) do
     book = Repo.get(Book, book_id)
     changeset = Book.changeset(book)
-    render(conn, "edit.json", changeset: changeset)
-  end
-
-  defp filter(conn, %{"filter" => filter}) do
-    #
+    render(conn, "item.json", changeset: changeset)
   end
 end

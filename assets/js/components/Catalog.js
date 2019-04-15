@@ -46,10 +46,7 @@ const Catalog = () => {
                 id="last_name"
                 type="text"
                 className="validate"
-                onKeyDown={e => {
-                  console.log('Keydown')
-                  filterBooks(e.target.value)
-                }}
+                onKeyDown={e => filterBooks(e.target.value)}
               />
               <label htmlFor="last_name">Search in Books</label>
             </div>
