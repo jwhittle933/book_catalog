@@ -1,19 +1,19 @@
 defmodule BookCatalogWeb.APIView do
   use BookCatalogWeb, :view
 
-  def render("books.json", %{books: books}) do
+  def render("items.json", %{books: books}) do
     %{
-      books: Enum.map(books, &books_json/1)
+      books: Enum.map(books, &items_json/1)
     }
   end
 
-  def render("book.json", %{book: book}) do
+  def render("item.json", %{book: book}) do
     %{
-      book: books_json(book)
+      book: items_json(book)
     }
   end
 
-  def books_json(book) do
+  def items_json(book) do
     %{
       id: book.id,
       title: book.title,

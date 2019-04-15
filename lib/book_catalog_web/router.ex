@@ -24,5 +24,6 @@ defmodule BookCatalogWeb.Router do
     pipe_through :api
 
     get "/books", APIController, :index
+    get "/books/:id", APIController, :show
   end
 end

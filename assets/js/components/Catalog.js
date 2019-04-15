@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FormSearch } from 'grommet-icons'
 import Axios from 'axios'
 
-//TODO: Implement fuzzy matching search feature
-// and sort functionality by title, author, date, etc.
-// Axios api call for all books based on sort category,
-// set state with returned data, and populate list
-
-// Add edit/delete functionality to each list item
+// TODO Add edit/delete functionality to each list item
 
 const Catalog = () => {
   const [books, setBooks] = useState([])
