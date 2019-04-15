@@ -24,8 +24,8 @@
     }
   },
   "lint-staged": {
-    "assets/**/*.js": [
-      "node node_modules/eslint/bin/eslint.js assets/**/*.js",
+    "assets/js/**/*.js": [
+      "node node_modules/eslint/bin/eslint.js assets/js/**/*.js",
       "prettier --write",
       "git add"
     ]

@@ -3,6 +3,6 @@ import Axios from 'axios'
 
 const Item = ({ id }) => {
   useEffect(() => {
-    Axios.get('/api/books/')
+    Axios.get('/api/books/' + id).then()
   }, [])
 }
