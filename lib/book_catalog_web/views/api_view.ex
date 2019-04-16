@@ -13,6 +13,7 @@ defmodule BookCatalogWeb.APIView do
     }
   end
 
+
   def items_json(book) do
     %{
       id: book.id,
