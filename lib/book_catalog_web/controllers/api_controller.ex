@@ -37,22 +37,35 @@ defmodule BookCatalogWeb.APIController do
     render(conn, "item.json", changeset: changeset)
   end
 
-  defp paginate(books, page_size) do
+  def paginate(books, page_size) do
     total_books = Enum.count(books)
     total_pages = Integer.floor_div(total_books, page_size) + 1
+    # Implementation of apply_pages
+    apply_pages(books, page_size, total_pages, 1, %{})
 
     Enum.take(books, page_size)
   end
 
-  defp apply_pages(books, per_page, pages_remaining, acc) when pages_remaining < 1 do
-    books
+  @doc """
+    needed vars
+    -> books list/map
+    -> page size, supplied from client // 1
+    -> how many pages, Integer.floor_div(total_books, page_size) + 1
+      >-> this value won't change
+    -> current page being created
+      >-> this value increments each recursion
+    -> pages left 
+     >-> calculation of total pages - current page; will be 0 on last recursion
+    -> accumulator for new lists/map
+  """
+
+  def apply_pages(books, page_size, 0, current_page, acc) do
+    Map.put(acc, "page#{current_page}", Enum.take(books, page_size))
   end
 
-  defp apply_pages(books, per_page, pages_remaining, acc) do
-    new_pages_remaining = pages_remaining - 1
-    current_page = pages_remaining - new_pages_remaining
-    new_acc = Map.put(acc, "page#{current_page}", Enum.take(books, per_page))
-
-    apply_pages(Enum.drop(books, per_page), per_page, new_pages_remaining, new_acc)
+  def apply_pages(books, page_size, total_pages, current_page, acc) do
+    new_acc = Map.put(acc, "page#{current_page}", Enum.take(books, page_size))
+    
+    apply_pages(Enum.drop(books, page_size), page_size, total_pages - 1, current_page + 1, new_acc)
   end
 end
