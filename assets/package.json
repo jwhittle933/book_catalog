@@ -24,7 +24,7 @@
     }
   },
   "lint-staged": {
-    "assets/js/**/*.js": [
+    "assets/js/components/*.js": [
       "prettier --write",
       "git add"
     ]

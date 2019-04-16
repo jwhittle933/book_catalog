@@ -38,6 +38,8 @@ defmodule BookCatalogWeb.APIController do
   end
 
   defp paginate(books, page_size) do
+    total_books = Enum.count(books)
+    total_pages = total_books / page_size
     Enum.take(books, page_size)
   end
 end
