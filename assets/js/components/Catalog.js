@@ -2,19 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { FormSearch } from 'grommet-icons'
 import Axios from 'axios'
 
-// TODO Add edit/delete functionality to each list item
-
 const Catalog = () => {
   const [books, setBooks] = useState([])
   const [filteredBooks, setFilteredBooks] = useState([])
   const [fuzzyMatch, setFuzzyMatch] = useState([])
+  const [pageSize, setPageSize] = useState(10)
+  const [pageNumber, setPageNumber] = useState(1)
 
   useEffect(() => {
-    Axios.get('/api/books').then(res => {
+    Axios.get(
+      `/api/books?page_size=${pageSize}&page_number=${pageNumber}`,
+    ).then(res => {
       setBooks(res.data.books)
       setFilteredBooks(res.data.books)
     })
-  }, [])
+  }, [pageNumber])
 
   const filterBooks = search => {
     const searchField = new RegExp(search, 'i')
@@ -62,6 +64,24 @@ const Catalog = () => {
             {book.page_count} <small>pgs.</small>, {book.date_published}
           </a>
         ))}
+      </div>
+      <div className="row container">
+        <div
+          className="col s3 btn blue"
+          onClick={() =>
+            pageNumber === 1 ? null : setPageNumber(pageNumber - 1)
+          }
+        >
+          Previous
+        </div>
+        <div className="col s2 center-align">{pageNumber}</div>
+        <div className="col s2 center-align">{pageSize}</div>
+        <div
+          className="col s3 btn blue"
+          onClick={() => setPageNumber(pageNumber + 1)}
+        >
+          Next
+        </div>
       </div>
     </div>
   )

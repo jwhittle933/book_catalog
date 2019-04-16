@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Book Catalog</title>
+    <title>Catalog</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </body>
@@ -13,7 +13,7 @@
   <body>
     <nav class="blue darken-4">
       <div class="nav-wrapper">
-        <a href="/" class="brand-logo center">Book Catalog</a>
+        <a href="/" class="brand-logo center">Catalog</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><%= link "Add New", to: Routes.catalog_path(@conn, :new), class: "waves-effect waves-light btn green accent-3" %></li>
         </ul>

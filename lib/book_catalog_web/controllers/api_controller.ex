@@ -10,7 +10,10 @@ defmodule BookCatalogWeb.APIController do
   @spec index(Plug.Conn.t(), any()) :: Plug.Conn.t()
   def index(conn, _params) do
     books = Repo.all(Book)
-    render(conn, "items.json", books: books)
+    page_size = conn.query_params["page_size"]
+    paginated_books = Enum.take(books, String.to_integer(page_size))
+
+    render(conn, "items.json", books: paginated_books)
   end
 
   @doc """
@@ -32,5 +35,9 @@ defmodule BookCatalogWeb.APIController do
     book = Repo.get(Book, book_id)
     changeset = Book.changeset(book)
     render(conn, "item.json", changeset: changeset)
+  end
+
+  defp paginate(books, page_size) do
+    Enum.take(books, page_size)
   end
 end
