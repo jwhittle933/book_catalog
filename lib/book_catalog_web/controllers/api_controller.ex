@@ -39,7 +39,20 @@ defmodule BookCatalogWeb.APIController do
 
   defp paginate(books, page_size) do
     total_books = Enum.count(books)
-    total_pages = total_books / page_size
+    total_pages = Integer.floor_div(total_books, page_size) + 1
+
     Enum.take(books, page_size)
+  end
+
+  defp apply_pages(books, per_page, pages_remaining, acc) when pages_remaining < 1 do
+    books
+  end
+
+  defp apply_pages(books, per_page, pages_remaining, acc) do
+    new_pages_remaining = pages_remaining - 1
+    current_page = pages_remaining - new_pages_remaining
+    new_acc = Map.put(acc, "page#{current_page}", Enum.take(books, per_page))
+
+    apply_pages(Enum.drop(books, per_page), per_page, new_pages_remaining, new_acc)
   end
 end
