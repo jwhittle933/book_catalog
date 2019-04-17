@@ -7,16 +7,29 @@ defmodule BookCatalogWeb.APIController do
   @doc """
     index api func for returning list of item to client
   """
+  def index(conn, %{"page_size" => page, "page_number" => page_number}) do
+    books = Repo.all(Book)
+    page_size = page |> String.to_integer
+    number = page_number |> String.to_integer 
+    total_pages = Enum.count(books) |> Integer.floor_div(page_size)
+    
+    bookList = apply_pages(books, page_size, total_pages, %{})
+    # doesn't dynamically access key, only sends page 1
+    # respBooks = bookList[number] 
+
+    resp = Map.get(bookList, number)
+    json conn, resp
+  end
+
   def index(conn, %{"page_size" => page}) do
-    IO.puts page
     books = Repo.all(Book)
 
     page_size = page |> String.to_integer
     total_pages = Enum.count(books) |> Integer.floor_div(page_size)
     
-    bookList = apply_pages(books, page_size, total_pages, 1, %{})
+    bookList = apply_pages(books, page_size, total_pages, %{})
   
-    json conn, bookList
+    json conn, bookList[1] # temp response to populate UI
   end
 
   def index(conn, _params) do
@@ -47,13 +60,13 @@ defmodule BookCatalogWeb.APIController do
   @doc """
     apply_pages 
   """
-  def apply_pages(books, page_size, 0, current_page, acc) do
-    Map.put(acc, "page#{current_page}", Enum.take(books, page_size))
+  def apply_pages(books, page_size, 0, acc) do
+    Map.put(acc, Enum.count(acc) + 1, Enum.take(books, page_size))
   end
 
-  def apply_pages(books, page_size, total_pages, current_page, acc) do
-    new_acc = Map.put(acc, "page#{current_page}", Enum.take(books, page_size))
-    apply_pages(Enum.drop(books, page_size), page_size, total_pages - 1, current_page + 1, new_acc)
+  def apply_pages(books, page_size, total_pages, acc) do
+    new_acc = Map.put(acc, Enum.count(acc) + 1, Enum.take(books, page_size))
+    apply_pages(Enum.drop(books, page_size), page_size, total_pages - 1, new_acc)
   end
 
 end
