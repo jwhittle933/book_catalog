@@ -13,16 +13,9 @@ defmodule BookCatalogWeb.APIController do
     books = Repo.all(Book)
     page_size = conn.query_params["page_size"]
     total_pages = Enum.count(books)
-
-    bookList = apply_pages(books, page_size, total_pages, 1, %{})
-    |> strip_meta()
-    |> Poison.encode()
     
-    resp = Poison.encode(books)
-    
-    conn 
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, books)
+  
+    json conn, books
 
   end
 
