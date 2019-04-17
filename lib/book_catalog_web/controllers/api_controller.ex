@@ -16,7 +16,7 @@ defmodule BookCatalogWeb.APIController do
     bookList = apply_pages(books, page_size, total_pages, %{})
     # doesn't dynamically access key, only sends page 1
     # respBooks = bookList[number] 
-
+    # IO.inspect Map.get(bookList, 3)
     resp = Map.get(bookList, number)
     json conn, resp
   end
