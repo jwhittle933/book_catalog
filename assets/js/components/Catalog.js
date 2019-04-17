@@ -11,8 +11,9 @@ const Catalog = () => {
 
   useEffect(() => {
     Axios.get(`/api/books?page_size=${pageSize}`).then(res => {
-      setBooks(res.data.books)
-      setFilteredBooks(res.data.books)
+      console.log(res.data)
+      setBooks(res.data)
+      setFilteredBooks(res.data)
     })
   }, [pageNumber])
 
