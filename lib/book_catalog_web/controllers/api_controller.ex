@@ -14,9 +14,7 @@ defmodule BookCatalogWeb.APIController do
     total_pages = Enum.count(books) |> Integer.floor_div(page_size)
     
     bookList = apply_pages(books, page_size, total_pages, %{})
-    # doesn't dynamically access key, only sends page 1
-    # respBooks = bookList[number] 
-    # IO.inspect Map.get(bookList, 3)
+
     resp = Map.get(bookList, number)
     json conn, resp
   end
