@@ -10,11 +10,13 @@ const Catalog = () => {
   const [pageNumber, setPageNumber] = useState(1)
 
   useEffect(() => {
-    Axios.get(`/api/books?page_size=${pageSize}`).then(res => {
-      console.log(res.data)
-      setBooks(res.data)
-      setFilteredBooks(res.data)
-    })
+    Axios.get(`/api/books?page_size=${pageSize}&page_number${pageNumber}`).then(
+      res => {
+        console.log(res.data)
+        setBooks(res.data)
+        setFilteredBooks(res.data)
+      },
+    )
   }, [pageNumber])
 
   const filterBooks = search => {
@@ -33,7 +35,6 @@ const Catalog = () => {
     if (search !== '') return setFilteredBooks(filtered)
     if (search === '') return books
   }
-
   return (
     <div className="z-depth-3">
       <div className="collection with-header">
