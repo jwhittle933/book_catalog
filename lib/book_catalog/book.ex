@@ -2,7 +2,7 @@ defmodule BookCatalog.Book do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @derive {Jason.Encoder, only: [:author, :date_published, :ed, :isbn, :page_count, :title, :subtitle, :publisher, :category, :volume, :series]}
+  @derive {Jason.Encoder, only: [:id, :author, :date_published, :ed, :isbn, :page_count, :title, :subtitle, :publisher, :category, :volume, :series]}
 
   schema "books" do
     field :author, :string
