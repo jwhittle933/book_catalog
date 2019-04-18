@@ -1,4 +1,4 @@
-defmodule BookCatalogWeb.APIController do
+defmodule BookCatalogWeb.BookController do
   use BookCatalogWeb, :controller
 
   alias BookCatalog.{Book, Repo}
@@ -60,11 +60,11 @@ defmodule BookCatalogWeb.APIController do
   @doc """
     apply_pages 
   """
-  def apply_pages(books, page_size, 0, acc) do
+  defp apply_pages(books, page_size, 0, acc) do
     Map.put(acc, Enum.count(acc) + 1, Enum.take(books, page_size))
   end
 
-  def apply_pages(books, page_size, total_pages, acc) do
+  defp apply_pages(books, page_size, total_pages, acc) do
     new_acc = Map.put(acc, Enum.count(acc) + 1, Enum.take(books, page_size))
     apply_pages(Enum.drop(books, page_size), page_size, total_pages - 1, new_acc)
   end

@@ -46,7 +46,7 @@ const Catalog = () => {
 
   return (
     <div className="z-depth-3">
-      <Search />
+      <Search filterBooks={filterBooks} />
       <div className="collection col s8">
         <div className="" />
         {filteredBooks.map(book => (
@@ -65,7 +65,7 @@ const Catalog = () => {
   )
 }
 
-const Search = () => (
+const Search = filterBooks => (
   <div className="row container">
     <div className="col s1 valign-wrapper">
       <FormSearch size="large" color="black" />
@@ -82,9 +82,7 @@ const Search = () => (
   </div>
 )
 
-const PageOpts = () => (
-  
-)
+// const PageOpts = () => ()
 
 const Pagination = () => (
   <ul className="pagination">
