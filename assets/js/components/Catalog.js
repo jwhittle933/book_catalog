@@ -5,9 +5,9 @@ import Axios from 'axios'
 const Catalog = () => {
   const [books, setBooks] = useState([])
   const [filteredBooks, setFilteredBooks] = useState([])
-  // const [totalPages, setTotalPages] = useState(0)
-  // const [fuzzyMatch, setFuzzyMatch] = useState([])
-  // const [pageSize, setPageSize] = useState(10)
+  const [totalPages, setTotalPages] = useState(0)
+  const [fuzzyMatch, setFuzzyMatch] = useState([])
+  const [pageSize, setPageSize] = useState(10)
   const [pageNumber, setPageNumber] = useState(1)
 
   useEffect(() => {
@@ -34,15 +34,15 @@ const Catalog = () => {
     if (search === '') return setFilteredBooks(books)
   }
 
-  // const fetchNextPage = () => {
-  //   if (pageNumber + 1 === totalPages) return
-  //   return setPageNumber(pageNumber + 1)
-  // }
+  const fetchNextPage = () => {
+    if (pageNumber + 1 === totalPages) return
+    return setPageNumber(pageNumber + 1)
+  }
 
-  // const fetchPrevPage = () => {
-  //   if (pageNumber === 1) return
-  //   return setPageNumber(pageNumber - 1)
-  // }
+  const fetchPrevPage = () => {
+    if (pageNumber === 1) return
+    return setPageNumber(pageNumber - 1)
+  }
 
   return (
     <div className="z-depth-3">
