@@ -5,19 +5,17 @@ import Axios from 'axios'
 const Catalog = () => {
   const [books, setBooks] = useState([])
   const [filteredBooks, setFilteredBooks] = useState([])
+  const [totalPages, setTotalPages] = useState(0)
   const [fuzzyMatch, setFuzzyMatch] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [pageNumber, setPageNumber] = useState(1)
 
   useEffect(() => {
-    Axios.get(
-      `/api/books?page_size=${pageSize}&page_number=${pageNumber}`,
-    ).then(res => {
-      console.log(res.data)
+    Axios.get(`/api/books`).then(res => {
       setBooks(res.data)
       setFilteredBooks(res.data)
     })
-  }, [pageNumber])
+  }, [])
 
   const filterBooks = search => {
     const searchField = new RegExp(search, 'i')
@@ -33,27 +31,24 @@ const Catalog = () => {
       )
     })
     if (search !== '') return setFilteredBooks(filtered)
-    if (search === '') return books
+    if (search === '') return setFilteredBooks(books)
   }
+
+  const fetchNextPage = () => {
+    if (pageNumber + 1 === totalPages) return
+    return setPageNumber(pageNumber + 1)
+  }
+
+  const fetchPrevPage = () => {
+    if (pageNumber === 1) return
+    return setPageNumber(pageNumber - 1)
+  }
+
   return (
     <div className="z-depth-3">
-      <div className="collection with-header">
-        <div className="container">
-          <div className="row">
-            <div className="col s1 valign-wrapper">
-              <FormSearch size="large" color="black" />
-            </div>
-            <div className="col s11 input-field inline">
-              <input
-                id="last_name"
-                type="text"
-                className="validate"
-                onKeyDown={e => filterBooks(e.target.value)}
-              />
-              <label htmlFor="last_name">Search in Books</label>
-            </div>
-          </div>
-        </div>
+      <Search />
+      <div className="collection col s8">
+        <div className="" />
         {filteredBooks.map(book => (
           <a
             href={`/${book.id}`}
@@ -65,26 +60,47 @@ const Catalog = () => {
           </a>
         ))}
       </div>
-      <div className="row container">
-        <div
-          className="col s3 btn blue"
-          onClick={() =>
-            pageNumber === 1 ? null : setPageNumber(pageNumber - 1)
-          }
-        >
-          Previous
-        </div>
-        <div className="col s2 center-align">{pageNumber}</div>
-        <div className="col s2 center-align">{pageSize}</div>
-        <div
-          className="col s3 btn blue"
-          onClick={() => setPageNumber(pageNumber + 1)}
-        >
-          Next
-        </div>
-      </div>
+      <Pagination />
     </div>
   )
 }
+
+const Search = () => (
+  <div className="row container">
+    <div className="col s1 valign-wrapper">
+      <FormSearch size="large" color="black" />
+    </div>
+    <div className="col s11 input-field inline">
+      <input
+        id="last_name"
+        type="text"
+        className="validate"
+        onKeyDown={e => filterBooks(e.target.value)}
+      />
+      <label htmlFor="last_name">Search in Books</label>
+    </div>
+  </div>
+)
+
+const PageOpts = () => (
+  
+)
+
+const Pagination = () => (
+  <ul className="pagination">
+    <li className="waves-effect m2">
+      <a href="#!">
+        <i className="material-icons">chevron_left</i>
+      </a>
+    </li>
+    <li className="waves-effect m2">1</li>
+    <li className="waves-effect m2">2</li>
+    <li className="waves-effect m2">
+      <a href="#!">
+        <i className="material-icons m2">chevron_right</i>
+      </a>
+    </li>
+  </ul>
+)
 
 export default Catalog

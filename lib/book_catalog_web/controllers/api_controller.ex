@@ -1,7 +1,6 @@
 defmodule BookCatalogWeb.APIController do
   use BookCatalogWeb, :controller
 
-  import Plug.Conn
   alias BookCatalog.{Book, Repo}
 
   @doc """
@@ -13,10 +12,13 @@ defmodule BookCatalogWeb.APIController do
     number = page_number |> String.to_integer 
     total_pages = Enum.count(books) |> Integer.floor_div(page_size)
     
-    bookList = apply_pages(books, page_size, total_pages, %{})
+    book_list = apply_pages(books, page_size, total_pages, %{})
+    |> Map.get(number)
 
-    resp = Map.get(bookList, number)
-    json conn, resp
+    json conn, %{
+      books: book_list,
+      page_count: total_pages
+    }
   end
 
   def index(conn, %{"page_size" => page}) do
