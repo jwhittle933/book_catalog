@@ -60,19 +60,19 @@ const Catalog = () => {
           <label htmlFor="last_name">Search in Books</label>
         </div>
       </div>
-      <div className="collection col s8">
-        <div className="" />
+      <ul className="collapsible popout collection col s8">
         {filteredBooks.map(book => (
-          <a
-            href={`/${book.id}`}
-            className="collection-item truncate blue-grey-text"
-            key={book.id}
-          >
-            <strong>{book.title}</strong> by <em>{book.author}</em>,{' '}
-            {book.page_count} <small>pgs.</small>, {book.date_published}
-          </a>
+          <li>
+            <div className="collapsible-header collection-item truncate">
+              <strong>{book.title}</strong>
+            </div>
+            <div className="collapsible-body">
+              {book.title}&nbsp; by <em>{book.author}</em>, {book.page_count}{' '}
+              <small>pgs.</small>, {book.date_published}
+            </div>
+          </li>
         ))}
-      </div>
+      </ul>
       <Pagination />
     </div>
   )

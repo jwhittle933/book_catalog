@@ -6,6 +6,11 @@ import './materialize.js'
 import CatalogList from './components/Catalog'
 // import Edit from './components/Edit';
 
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.collapsible')
+  var instances = M.Collapsible.init(elems, { accordion: true })
+})
+
 if (document.getElementById('app')) {
   const element = document.getElementById('app')
   ReactDOM.render(<CatalogList />, element)
