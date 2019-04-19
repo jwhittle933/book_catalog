@@ -46,7 +46,20 @@ const Catalog = () => {
 
   return (
     <div className="z-depth-3">
-      <Search filterBooks={filterBooks} />
+      <div className="row container">
+        <div className="col s1 valign-wrapper">
+          <FormSearch size="large" color="black" />
+        </div>
+        <div className="col s11 input-field inline">
+          <input
+            id="last_name"
+            type="text"
+            className="validate"
+            onKeyDown={e => filterBooks(e.target.value)}
+          />
+          <label htmlFor="last_name">Search in Books</label>
+        </div>
+      </div>
       <div className="collection col s8">
         <div className="" />
         {filteredBooks.map(book => (
