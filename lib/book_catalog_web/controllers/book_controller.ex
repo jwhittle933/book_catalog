@@ -29,12 +29,12 @@ defmodule BookCatalogWeb.BookController do
     
     bookList = apply_pages(books, page_size, total_pages, %{})
   
-    json conn, bookList[1] # temp response to populate UI
+    json conn, %{books: bookList[1]} # temp response to populate UI
   end
 
   def index(conn, _params) do
     books = Repo.all(Book)
-    json conn, books
+    json conn, %{books: books}
   end
 
   @doc """

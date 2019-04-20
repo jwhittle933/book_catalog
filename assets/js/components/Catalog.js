@@ -5,17 +5,26 @@ import Axios from 'axios'
 const Catalog = () => {
   const [books, setBooks] = useState([])
   const [filteredBooks, setFilteredBooks] = useState([])
-  // const [totalPages, setTotalPages] = useState(0)
+  const [show, setShow] = useState('all')
+  const [totalPages, setTotalPages] = useState(0)
   // const [fuzzyMatch, setFuzzyMatch] = useState([])
-  // const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(10)
   const [pageNumber, setPageNumber] = useState(1)
 
   useEffect(() => {
-    Axios.get(`/api/books`).then(res => {
-      setBooks(res.data)
-      setFilteredBooks(res.data)
+    Axios.get(setList(show)).then(res => {
+      console.log(res.data.books)
+      setBooks(res.data.books)
+      setFilteredBooks(res.data.books)
     })
-  }, [])
+  }, [show])
+
+  const setList = show => {
+    if (show === 'all') return `/api/books`
+    if (show === 'page') return `/api/books?page_size=${pageSize}`
+  }
+
+  const getNewPage = () => {}
 
   const filterBooks = search => {
     const searchField = new RegExp(search, 'i')
@@ -45,18 +54,17 @@ const Catalog = () => {
   // }
 
   return (
-    <div className="z-depth-3">
-      <UserControls filterBooks={filterBooks} />
+    <div>
+      <UserControls filterBooks={filterBooks} show={show} setShow={setShow} />
       <BookList filteredBooks={filteredBooks} />
-      <Pagination />
     </div>
   )
 }
 
 const BookList = ({ filteredBooks }) => (
-  <ul className="collapsible popout collection col s8">
+  <ul className="collapsible popout collection">
     {filteredBooks.map(book => (
-      <li key={book._id}>
+      <li key={book.id}>
         <div className="collapsible-header collection-item truncate">
           <strong>{book.title}</strong>
           {book.volume && ', ' + book.volume}
@@ -64,21 +72,12 @@ const BookList = ({ filteredBooks }) => (
         <div className="collapsible-body">
           {book.title} by <em>{book.author}</em>, {book.page_count}
           <small> pgs.</small>, {book.date_published}
-          <div className="">
+          <div>
             <a
               href={`/${book.id}`}
-              class="waves-effect waves-light btn-small right-align teal accent-3   blue-text text-darken-4"
+              className="waves-effect waves-light btn-small right-align teal accent-3   blue-text text-darken-4"
             >
-              View<i class="material-icons right">send</i>
-            </a>
-            <a
-              href={`/${book.id}/edit`}
-              class="waves-effect waves-light btn-small right-align grey darken-1"
-            >
-              Edit<i class="material-icons right">create</i>
-            </a>
-            <a class="waves-effect waves-light btn-small right-align red accent-3">
-              Delete<i class="material-icons right">close</i>
+              View<i className="material-icons right">send</i>
             </a>
           </div>
         </div>
@@ -87,7 +86,7 @@ const BookList = ({ filteredBooks }) => (
   </ul>
 )
 
-const UserControls = ({ filterBooks }) => (
+const UserControls = ({ filterBooks, show, setShow }) => (
   <div className="row container">
     <div className="col s1 valign-wrapper">
       <FormSearch size="large" color="black" />
@@ -101,12 +100,11 @@ const UserControls = ({ filterBooks }) => (
       />
       <label htmlFor="last_name">Search by Name, Author, etc...</label>
     </div>
-    <div class="input-field col s12">
-      <select>
-        <option value="1">Show All</option>
-        <option value="2">Show Pages</option>
+    <div className="input-field col s12">
+      <select defaultValue={show} onChange={e => setShow(e.target.value)}>
+        <option value="all">Show All</option>
+        <option value="page">Show Pages</option>
       </select>
-      <label>Materialize Select</label>
     </div>
   </div>
 )
