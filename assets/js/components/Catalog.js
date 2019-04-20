@@ -46,39 +46,41 @@ const Catalog = () => {
 
   return (
     <div className="z-depth-3">
-      <div className="row container">
-        <div className="col s1 valign-wrapper">
-          <FormSearch size="large" color="black" />
-        </div>
-        <div className="col s11 input-field inline">
-          <input
-            id="last_name"
-            type="text"
-            className="validate"
-            onKeyDown={e => filterBooks(e.target.value)}
-          />
-          <label htmlFor="last_name">Search in Books</label>
-        </div>
-      </div>
-      <ul className="collapsible popout collection col s8">
-        {filteredBooks.map(book => (
-          <li>
-            <div className="collapsible-header collection-item truncate">
-              <strong>{book.title}</strong>
-            </div>
-            <div className="collapsible-body">
-              {book.title}&nbsp; by <em>{book.author}</em>, {book.page_count}{' '}
-              <small>pgs.</small>, {book.date_published}
-            </div>
-          </li>
-        ))}
-      </ul>
+      <Search filterBooks={filterBooks} />
+      <BookList filteredBooks={filteredBooks} />
       <Pagination />
     </div>
   )
 }
 
-const Search = filterBooks => (
+const BookList = ({ filteredBooks }) => (
+  <ul className="collapsible popout collection col s8">
+    {filteredBooks.map(book => (
+      <li key={book._id}>
+        <div className="collapsible-header collection-item truncate">
+          <strong>{book.title}</strong>
+        </div>
+        <div className="collapsible-body">
+          {book.title}&nbsp; by <em>{book.author}</em>, {book.page_count}{' '}
+          <small>pgs.</small>, {book.date_published}
+          <div>
+            <a
+              href={`/${book.id}`}
+              class="waves-effect waves-light btn-small right-align grey darken-1"
+            >
+              <i class="material-icons left">cloud</i>Edit
+            </a>
+            <a class="waves-effect waves-light btn-small right-align red accent-3">
+              <i class="material-icons left">cloud</i>Delete
+            </a>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ul>
+)
+
+const Search = ({ filterBooks }) => (
   <div className="row container">
     <div className="col s1 valign-wrapper">
       <FormSearch size="large" color="black" />
@@ -90,7 +92,9 @@ const Search = filterBooks => (
         className="validate"
         onKeyDown={e => filterBooks(e.target.value)}
       />
-      <label htmlFor="last_name">Search in Books</label>
+      <label htmlFor="last_name">
+        Search by Name, Author, Category, etc...
+      </label>
     </div>
   </div>
 )
