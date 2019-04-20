@@ -46,7 +46,7 @@ const Catalog = () => {
 
   return (
     <div className="z-depth-3">
-      <Search filterBooks={filterBooks} />
+      <UserControls filterBooks={filterBooks} />
       <BookList filteredBooks={filteredBooks} />
       <Pagination />
     </div>
@@ -59,19 +59,26 @@ const BookList = ({ filteredBooks }) => (
       <li key={book._id}>
         <div className="collapsible-header collection-item truncate">
           <strong>{book.title}</strong>
+          {book.volume && ', ' + book.volume}
         </div>
         <div className="collapsible-body">
-          {book.title}&nbsp; by <em>{book.author}</em>, {book.page_count}{' '}
-          <small>pgs.</small>, {book.date_published}
-          <div>
+          {book.title} by <em>{book.author}</em>, {book.page_count}
+          <small> pgs.</small>, {book.date_published}
+          <div className="">
             <a
               href={`/${book.id}`}
+              class="waves-effect waves-light btn-small right-align teal accent-3   blue-text text-darken-4"
+            >
+              View<i class="material-icons right">send</i>
+            </a>
+            <a
+              href={`/${book.id}/edit`}
               class="waves-effect waves-light btn-small right-align grey darken-1"
             >
-              <i class="material-icons left">cloud</i>Edit
+              Edit<i class="material-icons right">create</i>
             </a>
             <a class="waves-effect waves-light btn-small right-align red accent-3">
-              <i class="material-icons left">cloud</i>Delete
+              Delete<i class="material-icons right">close</i>
             </a>
           </div>
         </div>
@@ -80,7 +87,7 @@ const BookList = ({ filteredBooks }) => (
   </ul>
 )
 
-const Search = ({ filterBooks }) => (
+const UserControls = ({ filterBooks }) => (
   <div className="row container">
     <div className="col s1 valign-wrapper">
       <FormSearch size="large" color="black" />
@@ -92,14 +99,17 @@ const Search = ({ filterBooks }) => (
         className="validate"
         onKeyDown={e => filterBooks(e.target.value)}
       />
-      <label htmlFor="last_name">
-        Search by Name, Author, Category, etc...
-      </label>
+      <label htmlFor="last_name">Search by Name, Author, etc...</label>
+    </div>
+    <div class="input-field col s12">
+      <select>
+        <option value="1">Show All</option>
+        <option value="2">Show Pages</option>
+      </select>
+      <label>Materialize Select</label>
     </div>
   </div>
 )
-
-// const PageOpts = () => ()
 
 const Pagination = () => (
   <ul className="pagination">

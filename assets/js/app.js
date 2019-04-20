@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
   var instances = M.Collapsible.init(elems, { accordion: true }) // eslint-disable-line
 })
 
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('select')
+  var instances = M.FormSelect.init(elems, {})
+})
+
 if (document.getElementById('app')) {
   const element = document.getElementById('app')
   ReactDOM.render(<CatalogList />, element)

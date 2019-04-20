@@ -5,4 +5,6 @@ const Item = ({ id }) => {
   useEffect(() => {
     Axios.get('/api/books/' + id).then()
   }, [])
+
+  return
 }
