@@ -8,8 +8,8 @@
 				data-created="<%= @book.inserted_at %>"
 	>
 </div>
-
 <%= form_for @changeset, Routes.catalog_path(@conn, :update, @book), fn f -> %>
+		<h4>Edit – <%= @book.title %></h4>
     <div class="form-group">
     	<label> Title
 	        <%= text_input f, :title, placeholder: "Title", class: "form-control" %>

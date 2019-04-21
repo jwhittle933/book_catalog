@@ -4,7 +4,16 @@ import 'phoenix_html'
 import './materialize.js'
 // import './socket.js'
 import CatalogList from './components/Catalog'
-// import Edit from './components/Edit';
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.collapsible')
+  var instances = M.Collapsible.init(elems, { accordion: true }) // eslint-disable-line
+})
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('select')
+  var instances = M.FormSelect.init(elems, {}) // eslint-disable-line
+})
 
 if (document.getElementById('app')) {
   const element = document.getElementById('app')

@@ -23,6 +23,6 @@ defmodule BookCatalogWeb.Router do
   scope "/api", BookCatalogWeb do
     pipe_through :api
 
-    resources "/books", APIController
+    resources "/books", BookController
   end
 end
