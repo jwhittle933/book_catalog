@@ -8,16 +8,18 @@ defmodule BookCatalogWeb.BookController do
   """
   def index(conn, %{"page_size" => page, "page_number" => page_number}) do
     books = Repo.all(Book)
+    total = Enum.count(books)
     page_size = page |> String.to_integer
     number = page_number |> String.to_integer 
-    total_pages = Enum.count(books) |> Integer.floor_div(page_size)
+    total_pages = total |> Integer.floor_div(page_size)
     
     book_list = apply_pages(books, page_size, total_pages, %{})
     |> Map.get(number)
 
     json conn, %{
       books: book_list,
-      page_count: total_pages
+      page_count: total_pages,
+      total_books: total
     }
   end
 
@@ -34,7 +36,8 @@ defmodule BookCatalogWeb.BookController do
 
   def index(conn, _params) do
     books = Repo.all(Book)
-    json conn, %{books: books}
+    total = Enum.count(books)
+    json conn, %{books: books, total_books: total}
   end
 
   @doc """

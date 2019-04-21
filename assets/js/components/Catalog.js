@@ -5,6 +5,7 @@ import Axios from 'axios'
 const Catalog = () => {
   const [books, setBooks] = useState([])
   const [filteredBooks, setFilteredBooks] = useState([])
+  const [totalBooks, setTotalBooks] = useState(0)
   const [show, setShow] = useState('all')
   const [totalPages, setTotalPages] = useState(0)
   // const [fuzzyMatch, setFuzzyMatch] = useState([])
@@ -13,15 +14,17 @@ const Catalog = () => {
 
   useEffect(() => {
     Axios.get(setList(show)).then(res => {
-      console.log(res.data.books)
       setBooks(res.data.books)
       setFilteredBooks(res.data.books)
+      setTotalBooks(res.data.total_books)
+      console.log(res.data.total_books)
     })
   }, [show])
 
   const setList = show => {
     if (show === 'all') return `/api/books`
-    if (show === 'page') return `/api/books?page_size=${pageSize}`
+    if (show === 'page')
+      return `/api/books?page_size=${pageSize}&page_number=${pageNumber}`
   }
 
   const getNewPage = () => {}
@@ -55,7 +58,12 @@ const Catalog = () => {
 
   return (
     <div>
-      <UserControls filterBooks={filterBooks} show={show} setShow={setShow} />
+      <UserControls
+        filterBooks={filterBooks}
+        totalBooks={totalBooks}
+        show={show}
+        setShow={setShow}
+      />
       <BookList filteredBooks={filteredBooks} />
     </div>
   )
@@ -86,7 +94,7 @@ const BookList = ({ filteredBooks }) => (
   </ul>
 )
 
-const UserControls = ({ filterBooks, show, setShow }) => (
+const UserControls = ({ filterBooks, totalBooks, show, setShow }) => (
   <div className="row container">
     <div className="col s1 valign-wrapper">
       <FormSearch size="large" color="black" />
@@ -105,6 +113,7 @@ const UserControls = ({ filterBooks, show, setShow }) => (
         <option value="all">Show All</option>
         <option value="page">Show Pages</option>
       </select>
+      Total: {totalBooks}
     </div>
   </div>
 )
