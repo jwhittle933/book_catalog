@@ -59,16 +59,4 @@ defmodule BookCatalogWeb.BookController do
     render(conn, "item.json", changeset: changeset)
   end
 
-  @doc """
-    apply_pages 
-  """
-  defp apply_pages(books, page_size, 0, acc) do
-    Map.put(acc, Enum.count(acc) + 1, Enum.take(books, page_size))
-  end
-
-  defp apply_pages(books, page_size, total_pages, acc) do
-    new_acc = Map.put(acc, Enum.count(acc) + 1, Enum.take(books, page_size))
-    apply_pages(Enum.drop(books, page_size), page_size, total_pages - 1, new_acc)
-  end
-
 end
