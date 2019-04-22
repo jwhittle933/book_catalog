@@ -8,7 +8,6 @@ const Catalog = () => {
   const [totalBooks, setTotalBooks] = useState(0)
   const [show, setShow] = useState('all')
   const [totalPages, setTotalPages] = useState(0)
-  // const [fuzzyMatch, setFuzzyMatch] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [pageNumber, setPageNumber] = useState(1)
 

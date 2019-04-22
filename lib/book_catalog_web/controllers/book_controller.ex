@@ -2,6 +2,7 @@ defmodule BookCatalogWeb.BookController do
   use BookCatalogWeb, :controller
 
   alias BookCatalog.{Book, Repo}
+  alias BookCatalogWeb.Pagination
 
   @doc """
     index api func for returning list of item to client
@@ -13,7 +14,7 @@ defmodule BookCatalogWeb.BookController do
     number = page_number |> String.to_integer 
     total_pages = total |> Integer.floor_div(page_size)
     
-    book_list = apply_pages(books, page_size, total_pages, %{})
+    book_list = Pagination.paginate(books, page_size, total_pages, %{})
     |> Map.get(number)
 
     json conn, %{
@@ -29,7 +30,7 @@ defmodule BookCatalogWeb.BookController do
     page_size = page |> String.to_integer
     total_pages = Enum.count(books) |> Integer.floor_div(page_size)
     
-    bookList = apply_pages(books, page_size, total_pages, %{})
+    bookList = Pagination.paginate(books, page_size, total_pages, %{})
   
     json conn, %{books: bookList[1]} # temp response to populate UI
   end
@@ -43,7 +44,6 @@ defmodule BookCatalogWeb.BookController do
   @doc """
     show api func for returning sinlge item to client
   """
-  @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, %{"id" => book_id} = _params) do
     book = Repo.get!(Book, book_id)
 
@@ -53,7 +53,6 @@ defmodule BookCatalogWeb.BookController do
   @doc """
     edit api func for updating sinlge item from the client
   """
-  @spec edit(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def edit(conn, %{"id" => book_id} = _params) do
     book = Repo.get(Book, book_id)
     changeset = Book.changeset(book)
