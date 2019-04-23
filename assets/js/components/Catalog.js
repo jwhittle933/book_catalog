@@ -8,7 +8,6 @@ const Catalog = () => {
   const [totalBooks, setTotalBooks] = useState(0)
   const [show, setShow] = useState('all')
   const [totalPages, setTotalPages] = useState(0)
-  // const [fuzzyMatch, setFuzzyMatch] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [pageNumber, setPageNumber] = useState(1)
 
@@ -17,9 +16,9 @@ const Catalog = () => {
       setBooks(res.data.books)
       setFilteredBooks(res.data.books)
       setTotalBooks(res.data.total_books)
-      console.log(res.data.total_books)
+      setTotalPages(res.data.page_count)
     })
-  }, [show])
+  }, [show, pageNumber])
 
   const setList = show => {
     if (show === 'all') return `/api/books`
@@ -27,7 +26,7 @@ const Catalog = () => {
       return `/api/books?page_size=${pageSize}&page_number=${pageNumber}`
   }
 
-  const getNewPage = () => {}
+  // const getNewPage = () => {}
 
   const filterBooks = search => {
     const searchField = new RegExp(search, 'i')
@@ -46,16 +45,6 @@ const Catalog = () => {
     if (search === '') return setFilteredBooks(books)
   }
 
-  // const fetchNextPage = () => {
-  //   if (pageNumber + 1 === totalPages) return
-  //   return setPageNumber(pageNumber + 1)
-  // }
-
-  // const fetchPrevPage = () => {
-  //   if (pageNumber === 1) return
-  //   return setPageNumber(pageNumber - 1)
-  // }
-
   return (
     <div>
       <UserControls
@@ -64,10 +53,41 @@ const Catalog = () => {
         show={show}
         setShow={setShow}
       />
+      {show === 'page' && (
+        <Pagination
+          totalPages={totalPages}
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
+        />
+      )}
+      <p className="right">Total: {totalBooks}</p>
       <BookList filteredBooks={filteredBooks} />
     </div>
   )
 }
+
+const UserControls = ({ filterBooks, show, setShow }) => (
+  <div className="row container">
+    <div className="col s1 valign-wrapper">
+      <FormSearch size="large" color="black" />
+    </div>
+    <div className="col s11 input-field inline">
+      <input
+        id="last_name"
+        type="text"
+        className="validate"
+        onKeyDown={e => filterBooks(e.target.value)}
+      />
+      <label htmlFor="last_name">Search by Name, Author, etc...</label>
+    </div>
+    <div className="input-field col s12">
+      <select defaultValue={show} onChange={e => setShow(e.target.value)}>
+        <option value="all">Show All</option>
+        <option value="page">Show Pages</option>
+      </select>
+    </div>
+  </div>
+)
 
 const BookList = ({ filteredBooks }) => (
   <ul className="collapsible popout collection">
@@ -94,42 +114,35 @@ const BookList = ({ filteredBooks }) => (
   </ul>
 )
 
-const UserControls = ({ filterBooks, totalBooks, show, setShow }) => (
-  <div className="row container">
-    <div className="col s1 valign-wrapper">
-      <FormSearch size="large" color="black" />
-    </div>
-    <div className="col s11 input-field inline">
-      <input
-        id="last_name"
-        type="text"
-        className="validate"
-        onKeyDown={e => filterBooks(e.target.value)}
-      />
-      <label htmlFor="last_name">Search by Name, Author, etc...</label>
-    </div>
-    <div className="input-field col s12">
-      <select defaultValue={show} onChange={e => setShow(e.target.value)}>
-        <option value="all">Show All</option>
-        <option value="page">Show Pages</option>
-      </select>
-      Total: {totalBooks}
-    </div>
-  </div>
-)
-
-const Pagination = () => (
+const Pagination = ({ pageNumber, totalPages, setPageNumber }) => (
   <ul className="pagination">
-    <li className="waves-effect m2">
-      <a href="#!">
+    <li
+      className={pageNumber === 1 ? 'disabled' : 'waves-effect'}
+      onClick={() => (pageNumber === 1 ? null : setPageNumber(pageNumber - 1))}
+    >
+      <a>
         <i className="material-icons">chevron_left</i>
       </a>
     </li>
-    <li className="waves-effect m2">1</li>
-    <li className="waves-effect m2">2</li>
-    <li className="waves-effect m2">
-      <a href="#!">
-        <i className="material-icons m2">chevron_right</i>
+    {[...Array(totalPages).keys()].map(page => (
+      <li
+        className={`waves-effect ${
+          page + 1 === pageNumber ? 'active deep-orange accent-3' : null
+        }`}
+        key={page}
+        onClick={() => setPageNumber(page + 1)}
+      >
+        <a>{page + 1}</a>
+      </li>
+    ))}
+    <li
+      className={pageNumber === totalPages ? 'disabled' : 'waves-effect'}
+      onClick={() =>
+        pageNumber === totalPages ? null : setPageNumber(pageNumber + 1)
+      }
+    >
+      <a>
+        <i className="material-icons">chevron_right</i>
       </a>
     </li>
   </ul>
