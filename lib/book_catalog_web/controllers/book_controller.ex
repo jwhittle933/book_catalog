@@ -3,17 +3,16 @@ defmodule BookCatalogWeb.BookController do
 
   alias BookCatalog.{Book, Repo}
   alias BookCatalogWeb.Pagination
-  alias BookCatalogWeb.Sort
 
   @doc """
     index api func for returning list of item to client
   """
   def index(conn, %{"page_size" => page, "page_number" => page_number}) do
-    books = Repo.all(Book) |> Sort.sort_items(:title)
+    books = Repo.all(Book) |> sort_items(:title)
     total = Enum.count(books)
     page_size = page |> String.to_integer
     number = page_number |> String.to_integer 
-    total_pages = total |> Integer.floor_div(page_size)
+    total_pages = total |> Integer.floor_div(page_size) |> (fn x -> x + 1 end).() 
     
     book_list = Pagination.paginate(books, page_size, total_pages, %{})
     |> Map.get(number)
@@ -29,7 +28,7 @@ defmodule BookCatalogWeb.BookController do
     books = Repo.all(Book)
 
     page_size = page |> String.to_integer
-    total_pages = Enum.count(books) |> Integer.floor_div(page_size)
+    total_pages = Enum.count(books) |> Integer.floor_div(page_size) |> (fn x -> x + 1 end).() 
     
     bookList = Pagination.paginate(books, page_size, total_pages, %{})
   
@@ -37,7 +36,7 @@ defmodule BookCatalogWeb.BookController do
   end
 
   def index(conn, _params) do
-    books = Repo.all(Book) |> Sort.sort_items(:title)
+    books = Repo.all(Book) |> sort_items(:title)
     total = Enum.count(books)
     json conn, %{books: books, total_books: total}
   end
@@ -58,6 +57,10 @@ defmodule BookCatalogWeb.BookController do
     book = Repo.get(Book, book_id)
     changeset = Book.changeset(book)
     render(conn, "item.json", changeset: changeset)
+  end
+
+  defp sort_items(list, field) do 
+    Enum.sort_by list, &Map.fetch(&1, field)
   end
 
 end

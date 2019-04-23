@@ -16,7 +16,7 @@ const Catalog = () => {
       setBooks(res.data.books)
       setFilteredBooks(res.data.books)
       setTotalBooks(res.data.total_books)
-      setTotalPages(res.data.books.length)
+      setTotalPages(res.data.page_count)
     })
   }, [show, pageNumber])
 
@@ -26,7 +26,7 @@ const Catalog = () => {
       return `/api/books?page_size=${pageSize}&page_number=${pageNumber}`
   }
 
-  const getNewPage = () => {}
+  // const getNewPage = () => {}
 
   const filterBooks = search => {
     const searchField = new RegExp(search, 'i')
@@ -60,12 +60,13 @@ const Catalog = () => {
           setPageNumber={setPageNumber}
         />
       )}
+      <p className="right">Total: {totalBooks}</p>
       <BookList filteredBooks={filteredBooks} />
     </div>
   )
 }
 
-const UserControls = ({ filterBooks, totalBooks, show, setShow }) => (
+const UserControls = ({ filterBooks, show, setShow }) => (
   <div className="row container">
     <div className="col s1 valign-wrapper">
       <FormSearch size="large" color="black" />
@@ -84,7 +85,6 @@ const UserControls = ({ filterBooks, totalBooks, show, setShow }) => (
         <option value="all">Show All</option>
         <option value="page">Show Pages</option>
       </select>
-      Total: {totalBooks}
     </div>
   </div>
 )
@@ -117,25 +117,33 @@ const BookList = ({ filteredBooks }) => (
 const Pagination = ({ pageNumber, totalPages, setPageNumber }) => (
   <ul className="pagination">
     <li
-      className="waves-effect m2"
-      onClick={() => setPageNumber(pageNumber - 1)}
+      className={pageNumber === 1 ? 'disabled' : 'waves-effect'}
+      onClick={() => (pageNumber === 1 ? null : setPageNumber(pageNumber - 1))}
     >
-      <i className="material-icons">chevron_left</i>
+      <a>
+        <i className="material-icons">chevron_left</i>
+      </a>
     </li>
     {[...Array(totalPages).keys()].map(page => (
       <li
-        className="waves-effect m2"
+        className={`waves-effect ${
+          page + 1 === pageNumber ? 'active deep-orange accent-3' : null
+        }`}
         key={page}
-        onClick={() => setPageNumber(page)}
+        onClick={() => setPageNumber(page + 1)}
       >
-        {page + 1}
+        <a>{page + 1}</a>
       </li>
     ))}
     <li
-      className="waves-effect m2"
-      onClick={() => setPageNumber(pageNumber + 1)}
+      className={pageNumber === totalPages ? 'disabled' : 'waves-effect'}
+      onClick={() =>
+        pageNumber === totalPages ? null : setPageNumber(pageNumber + 1)
+      }
     >
-      <i className="material-icons m2">chevron_right</i>
+      <a>
+        <i className="material-icons">chevron_right</i>
+      </a>
     </li>
   </ul>
 )
