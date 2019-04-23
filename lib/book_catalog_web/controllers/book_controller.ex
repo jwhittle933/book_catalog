@@ -3,12 +3,13 @@ defmodule BookCatalogWeb.BookController do
 
   alias BookCatalog.{Book, Repo}
   alias BookCatalogWeb.Pagination
+  alias BookCatalogWeb.Sort
 
   @doc """
     index api func for returning list of item to client
   """
   def index(conn, %{"page_size" => page, "page_number" => page_number}) do
-    books = Repo.all(Book)
+    books = Repo.all(Book) |> Sort.sort_items(:title)
     total = Enum.count(books)
     page_size = page |> String.to_integer
     number = page_number |> String.to_integer 
@@ -36,7 +37,7 @@ defmodule BookCatalogWeb.BookController do
   end
 
   def index(conn, _params) do
-    books = Repo.all(Book)
+    books = Repo.all(Book) |> Sort.sort_items(:title)
     total = Enum.count(books)
     json conn, %{books: books, total_books: total}
   end
