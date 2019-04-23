@@ -12,7 +12,7 @@ defmodule BookCatalogWeb.BookController do
     total = Enum.count(books)
     page_size = page |> String.to_integer
     number = page_number |> String.to_integer 
-    total_pages = total |> Integer.floor_div(page_size) |> (fn x -> x + 1 end).() 
+    total_pages = total |> Integer.floor_div(page_size) |> (fn x -> x + 1 end).()
     
     book_list = Pagination.paginate(books, page_size, total_pages, %{})
     |> Map.get(number)
